@@ -9,15 +9,13 @@ const InputSearch = () => {
   const router = useRouter(); // Panggil useRouter sebagai fungsi
 
   const handleSearch = (event) => {
-    event.preventDefault();
     const keyword = searchRef.current.value;
 
-    router.push(`/search/${keyword}`);
-  };
+    if (!keyword) return;
 
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handleSearch(event);
+    if (event.key === "Enter" || event.type === "click") {
+      event.preventDefault();
+      router.push(`/search/${keyword}`);
     }
   };
 
@@ -27,7 +25,7 @@ const InputSearch = () => {
         placeholder="Cari anime..."
         className="w-full p-2 rounded"
         ref={searchRef}
-        onKeyPress={handleKeyPress} // Menambahkan event handler untuk key press
+        onKeyPress={handleSearch} // Menambahkan event handler untuk key press
       ></input>
       <button className="absolute top-2 end-2" onClick={handleSearch}>
         <MagnifyingGlass size={24} />
