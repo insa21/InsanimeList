@@ -22,5 +22,16 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        //dimasukan kedalam folder anime[id] jadi disana classnamenya pondok hehe
+        ".data-box": {
+          "@apply w-36 flex flex-col justify-center items-center rounded border border-color-primary p-2":
+            "",
+        },
+      };
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+  ],
 };
