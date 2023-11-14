@@ -1,4 +1,4 @@
-import { getAnimeResponse } from "@/app/libs/api-libs";
+import { getAnimeResponse } from "@/libs/api-libs";
 import Image from "next/image";
 import VideoPlayer from "@/components/Utilities/VideoPlayer";
 
@@ -13,7 +13,7 @@ const Page = async ({ params: { id } }) => {
 
   // Mendapatkan respons detail anime dari API
   const anime = await getAnimeResponse(`anime/${id}`);
-  console.log(anime);
+  // console.log(anime);
 
   // Render halaman detail anime
   return (

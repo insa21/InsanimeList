@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 import HeaderMenu from "@/components/Utilities/HeaderMenu";
 import Pagination from "@/components/Utilities/Pagination";
 import AnimeList from "@/components/AnimeList";
-import { getAnimeResponse } from "../libs/api-libs";
+import { getAnimeResponse } from "@/libs/api-libs";
 
 const Page = () => {
   const [page, setPage] = useState(1);
   const [topAnime, setTopAnime] = useState([]);
 
   const fetchData = async () => {
-    const populerAnime = await getAnimeResponse("top/anime", `page=${page}`)
+    const populerAnime = await getAnimeResponse("top/anime", `page=${page}`);
     setTopAnime(populerAnime);
   };
 
@@ -23,7 +23,11 @@ const Page = () => {
     <>
       <HeaderMenu title={`Anime Terpopuler #${page}`}></HeaderMenu>
       <AnimeList api={topAnime}></AnimeList>
-      <Pagination page={page} lastPage={topAnime.pagination?.last_visible_page} setPage={setPage}></Pagination>
+      <Pagination
+        page={page}
+        lastPage={topAnime.pagination?.last_visible_page}
+        setPage={setPage}
+      ></Pagination>
     </>
   );
 };
