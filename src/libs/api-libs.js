@@ -8,5 +8,16 @@ export const getAnimeResponse = async (resource, query) => {
 
 export const getNestedAnimeResponse = async (resource, objectProperty) => {
   const response = await getAnimeResponse(resource); // Pastikan menggunakan async/await untuk mendapatkan respons dari API
-  return response.data.flatMap((item) => item.entry); // Gunakan flatMap untuk menggabungkan hasil dari setiap objek
+  return response.data.flatMap((item) => item[objectProperty]); // Gunakan flatMap untuk menggabungkan hasil dari setiap objek
+};
+
+export const reproduce = (data, gap) => {
+  const first = ~~(Math.random() * (data.length - gap) + 1);
+  const last = first + gap;
+
+  const response = {
+    data: data.slice(first, last),
+  };
+
+  return response;
 };

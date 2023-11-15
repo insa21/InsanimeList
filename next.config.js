@@ -5,6 +5,10 @@ const nextConfig = {
       {
         hostname: "cdn.myanimelist.net",
       },
+      {
+        // Menginport gambar dari API github
+        hostname: "avatars.githubusercontent.com",
+      },
     ],
   },
 };
