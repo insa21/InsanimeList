@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 const gabarito = Gabarito({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "CuyAnimeList",
+  title: "InsanimeList",
   description: "Website Anime Indonesia",
 };
 

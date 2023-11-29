@@ -19,14 +19,14 @@ const Page = async ({ params: { id } }) => {
   return (
     <>
       {/* Bagian Header */}
-      <div className="pt-4 px-4">
+      <div className="pt-4 px-2">
         <h3 className="text-2xl text-color-primary">
           {anime.data.title} - {anime.data.year}
         </h3>
       </div>
 
       {/* Bagian Informasi Anime */}
-      <div className="pt-4 px-4 flex gap-2 text-color-primary overflow-x-auto">
+      <div className="pt-4 px-2 flex gap-2 text-color-primary overflow-x-auto">
         <div className="data-box">
           <div>Peringkat</div>
           <p>{anime.data.rank}</p>
@@ -85,6 +85,19 @@ const Page = async ({ params: { id } }) => {
         </div>
 
         <div className="data-box">
+          <div>Lisensi</div>
+          <div className="flex text-center" style={isi}>
+            {/* Menampilkan nama studio dengan pemisah koma */}
+            {anime.data.licensors.map((lisensor, index) => (
+              <span key={index} className="text-center items-center">
+                {lisensor.name}
+                {index !== anime.data.licensors.length - 1 ? ", " : ""}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="data-box">
           <div>Genre</div>
           <div className="flex" style={isi}>
             {/* Menampilkan genre dengan pemisah koma */}
@@ -103,25 +116,38 @@ const Page = async ({ params: { id } }) => {
         </div>
       </div>
 
-      {/* Bagian Gambar dan Sinopsis */}
-      <div className="pt-4 px-4 flex gap-2 sm:flex-nowrap flex-wrap text-color-primary">
-        {/* Menampilkan gambar dengan menggunakan Image dari Next.js */}
-        <Image
-          src={anime.data.images.webp.image_url}
-          alt={anime.data.images.jpg.image_url}
-          width={250}
-          height={250}
-          className="w-full rounded object-cover"
-        ></Image>
+      <div className="grid md:grid-cols-2 gap-2 grid-cols-1 mx-2 py-4">
+        {/* Kolom Pertama: Gambar */}
+        <div className="flex flex-col justify-center items-center">
+          {/* Menggunakan Image dari Next.js */}
+          <Image
+            src={anime.data.images.webp.image_url}
+            alt={anime.data.images.jpg.image_url}
+            width={350}
+            height={350}
+            className="w-full rounded object-cover max-h-96"
+          />
+        </div>
 
-        {/* Menampilkan sinopsis */}
-        <p className="text-justify text-xl">{anime.data.synopsis}</p>
+        {/* Kolom Kedua: Video YouTube */}
+        <div className="">
+          {/* Menampilkan Video Player dengan menggunakan VideoPlayer dari komponen Utilities */}
+          <VideoPlayer
+            youTubeId={anime.data.trailer.youtube_id}
+            width="100%" 
+            height="384" 
+            className="w-full rounded object-cover max-h-96"
+          />
+        </div>
       </div>
-
-      {/* Bagian Video Player */}
-      <div className="">
-        {/* Menampilkan Video Player dengan menggunakan VideoPlayer dari komponen Utilities */}
-        <VideoPlayer youTubeId={anime.data.trailer.youtube_id}></VideoPlayer>
+      <div className="flex flex-col py-4 gap-2 ">
+        <h3 className="text-xl text-color-primary pl-2">
+          {anime.data.title_english} | {anime.data.rating}
+        </h3>
+        <p className=" text-color-primary pl-2">{anime.data.synopsis}</p>
+        <a href={anime.data.url} className="text-color-pindah underline pl-2">
+          official website
+        </a>
       </div>
     </>
   );
