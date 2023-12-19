@@ -20,7 +20,7 @@ const Page = async () => {
           My Collection
         </Link>
         <Link
-          href="/users/dashboard/collection"
+          href="/users/dashboard/collectio"
           className="bg-color-accent text-color-dark font-bold px-4 py-3 text-xl"
         >
           My Comment

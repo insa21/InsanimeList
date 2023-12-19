@@ -1,6 +1,9 @@
 import { getAnimeResponse } from "@/libs/api-libs";
 import Image from "next/image";
 import VideoPlayer from "@/components/Utilities/VideoPlayer";
+import ColloctionButton from "@/components/AnimeList/CollectionButton";
+import { authUserSession } from "@/libs/auth-libs";
+import prisma from "@/libs/prisma";
 
 // Komponen Page sebagai fungsi async untuk halaman detail anime
 const Page = async ({ params: { id } }) => {
@@ -13,6 +16,10 @@ const Page = async ({ params: { id } }) => {
 
   // Mendapatkan respons detail anime dari API
   const anime = await getAnimeResponse(`anime/${id}`);
+  const user = await authUserSession();
+  const collection = await prisma.collection.findFirst({
+    where: { user_email: user?.email, anime_mal_id: id },
+  });
   // console.log(anime);
 
   // Render halaman detail anime
@@ -23,6 +30,12 @@ const Page = async ({ params: { id } }) => {
         <h3 className="text-2xl text-color-primary">
           {anime.data.title} - {anime.data.year}
         </h3>
+        {!collection && user && (
+          <ColloctionButton
+            anime_mal_id={id}
+            user_email={user?.email}
+          ></ColloctionButton>
+        )}
       </div>
 
       {/* Bagian Informasi Anime */}
@@ -134,8 +147,8 @@ const Page = async ({ params: { id } }) => {
           {/* Menampilkan Video Player dengan menggunakan VideoPlayer dari komponen Utilities */}
           <VideoPlayer
             youTubeId={anime.data.trailer.youtube_id}
-            width="100%" 
-            height="384" 
+            width="100%"
+            height="384"
             className="w-full rounded object-cover max-h-96"
           />
         </div>
