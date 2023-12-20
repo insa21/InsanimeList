@@ -4,6 +4,8 @@ import VideoPlayer from "@/components/Utilities/VideoPlayer";
 import ColloctionButton from "@/components/AnimeList/CollectionButton";
 import { authUserSession } from "@/libs/auth-libs";
 import prisma from "@/libs/prisma";
+import CommentInput from "@/components/AnimeList/CommentInput";
+import CommentBox from "@/components/AnimeList/CommentBox";
 
 // Komponen Page sebagai fungsi async untuk halaman detail anime
 const Page = async ({ params: { id } }) => {
@@ -34,6 +36,8 @@ const Page = async ({ params: { id } }) => {
           <ColloctionButton
             anime_mal_id={id}
             user_email={user?.email}
+            anime_image={anime.data.images.webp.image_url}
+            anime_title={anime.data.title}
           ></ColloctionButton>
         )}
       </div>
@@ -161,6 +165,20 @@ const Page = async ({ params: { id } }) => {
         <a href={anime.data.url} className="text-color-pindah underline pl-2">
           official website
         </a>
+      </div>
+      <div className="p-4">
+        <h3 className="text-color-primary text-2xl mb-2">
+          Komentar Penonton:{" "}
+        </h3>
+        <CommentBox anime_mal_id={id}></CommentBox>
+        {user && (
+          <CommentInput
+            anime_mal_id={id}
+            user_email={user?.email}
+            username={user?.name}
+            anime_title={anime.data.title}
+          ></CommentInput>
+        )}
       </div>
     </>
   );
